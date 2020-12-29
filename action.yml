@@ -1,0 +1,19 @@
+# composite action https://docs.github.com/en/free-pro-team@latest/actions/creating-actions/creating-a-composite-run-steps-action
+name: 'Extract Branch Name'
+description: 'Extracts Branch Name, Slug and Git Sha of the Current Commit or Pull Request'
+outputs:
+  BRANCH: # id of output
+    description: Name of the branch that this action is being run for. For Pull Requests it will be the pull request id
+    value: ${{ steps.composite-action-export-branch.outputs.BRANCH }}
+  BRANCH_SLUG:
+    description: Slug of the branch name. For Pull Requests it will be "PR-{PRID}"
+    value: ${{ steps.composite-action-export-branch.outputs.BRANCH_SLUG }}
+  GIT_SHA:
+    description: SHA of the (merge) commit that this action is being run for
+    value: ${{ steps.composite-action-export-branch.outputs.GIT_SHA }}
+runs:
+  using: composite
+  steps: 
+    - shell: bash
+      id: composite-action-export-branch
+      run: ${{ github.action_path }}/action.sh
