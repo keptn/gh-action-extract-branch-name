@@ -24,6 +24,7 @@ fi
 GIT_SHA="$(git rev-parse --short HEAD)"
 
 # print GIT_SHA, BRANCH and BRANCH_SLUG (make sure they are also set in needs.prepare_ci_run.outputs !!!)
-echo "##[set-output name=BRANCH;]$(echo ${BRANCH})"
-echo "##[set-output name=BRANCH_SLUG;]$(echo ${BRANCH_SLUG})"
-echo "##[set-output name=GIT_SHA;]$(echo ${GIT_SHA})"
+# shellcheck disable=SC2129
+echo "BRANCH=$(echo ${BRANCH})" >> "$GITHUB_OUTPUT"
+echo "BRANCH_SLUG=$(echo ${BRANCH_SLUG})" >> "$GITHUB_OUTPUT"
+echo "GIT_SHA=$(echo ${GIT_SHA})" >> "$GITHUB_OUTPUT"
